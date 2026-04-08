@@ -4,8 +4,9 @@
 # Build artifacts
 build/
 DerivedData/
-*.dmg
 *.pkg
+*.app/
+icon.iconset/
 
 # Swift Package Manager
 .build/
