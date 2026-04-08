@@ -2,10 +2,20 @@ import SwiftUI
 import AppKit
 
 class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
+    private var isShuttingDown = false
+
     func applicationDidFinishLaunching(_ notification: Notification) {
         if let window = NSApplication.shared.windows.first {
             configureWindow(window)
         }
+
+        // Listen for system shutdown/logout
+        NSWorkspace.shared.notificationCenter.addObserver(
+            self,
+            selector: #selector(handlePowerOff),
+            name: NSWorkspace.willPowerOffNotification,
+            object: nil
+        )
 
         NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
             if event.keyCode == 53 {
@@ -13,6 +23,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                 return nil
             }
             return event
+        }
+    }
+
+    @objc private func handlePowerOff() {
+        isShuttingDown = true
+    }
+
+    func applicationWillTerminate(_ notification: Notification) {
+        // If it's a voluntary quit (not system shutdown), clear everything
+        if !isShuttingDown {
+            UserDefaults.standard.removeObject(forKey: "saved_tasks")
         }
     }
 
