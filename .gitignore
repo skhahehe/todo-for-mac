@@ -1,0 +1,15 @@
+# macOS
+.DS_Store
+
+# Build artifacts
+build/
+DerivedData/
+*.dmg
+*.pkg
+
+# Swift Package Manager
+.build/
+.swiftpm/
+
+# Git
+.git/
