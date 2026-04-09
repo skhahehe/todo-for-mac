@@ -44,6 +44,16 @@ struct ContentView: View {
                                 .foregroundColor(task.isCompleted ? .gray : .white)
                         }
                         .listRowBackground(Color.clear)
+                        .contextMenu {
+                            Button(role: .destructive) {
+                                if let index = tasks.firstIndex(where: { $0.id == task.id }) {
+                                    tasks.remove(at: index)
+                                    saveTasks()
+                                }
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                            }
+                        }
                     }
                     .onDelete { indices in
                         tasks.remove(atOffsets: indices)

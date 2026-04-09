@@ -6,6 +6,7 @@ build/
 DerivedData/
 *.pkg
 *.app/
+*.dmg
 icon.iconset/
 
 # Swift Package Manager
